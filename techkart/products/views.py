@@ -6,7 +6,14 @@ from django.core.paginator import Paginator
 
 
 def home(request):
-    return render(request, "index.html")
+    featured_products = Product.objects.order_by('-priority')[:4]
+    latest_products = Product.objects.order_by('-created_at')[:8]
+    context = {
+        'featured_products':featured_products,
+        'latest_products':latest_products
+    }
+
+    return render(request, "index.html",context)
 
 
 # Products page
@@ -18,8 +25,8 @@ def products(request):
     else:
         pass
 
-    product_list = Product.objects.all()
-    item_paginator = Paginator(product_list, 3)
+    product_list = Product.objects.order_by('-priority')
+    item_paginator = Paginator(product_list, 4)
     product_list = item_paginator.get_page(page)
     products = {"products": product_list}
 
