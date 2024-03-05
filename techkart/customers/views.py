@@ -2,11 +2,13 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from .models import Customer
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
 
 
 def account(request):
+
     # Register
     if request.POST and "register" in request.POST:
         try:
@@ -16,37 +18,41 @@ def account(request):
             password = request.POST.get("password")
             address = request.POST.get("address")
             phone = request.POST.get("phone")
-            print(request.POST)
-
             # Create User Account
-            user = User.objects.create(
+            user = User.objects.create_user(
                 username=username, password=password, email=email
             )
-
             # Create Customer Account
             customer = Customer.objects.create(
                 user=user, username=username, phone=int(phone), address=address
             )
-            return redirect("home")
+            succesmsg = "Successfully Registered!"
+            messages.success(request, succesmsg)
 
-        except:
-
-            errormsg = "Username Exists Or Invalid credentials"
+        except Exception as e:
+            errormsg = "Username Exists Or Invalid data!"
             messages.error(request, errormsg)
-            print(errormsg)
 
-
+    # Login
     elif request.POST and "login" in request.POST:
         username = request.POST.get("username")
         password = request.POST.get("password")
-        print(request.POST)
+        user = authenticate(username=username, password=password)
+
+        if user:
+            login(request, user)
+            return redirect("home")
+
+        else:
+            errormsg = "Username or Password Incorrect!"
+            messages.error(request, errormsg)
 
     else:
         pass
 
-
     return render(request, "account.html")
 
-    # Login
 
-
+def signout(request):
+    logout(request)
+    return redirect('home')

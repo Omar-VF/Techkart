@@ -26,7 +26,7 @@ def products(request):
         pass
 
     product_list = Product.objects.order_by('-priority')
-    item_paginator = Paginator(product_list, 4)
+    item_paginator = Paginator(product_list, 8)
     product_list = item_paginator.get_page(page)
     products = {"products": product_list}
 
