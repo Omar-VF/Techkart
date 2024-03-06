@@ -31,6 +31,9 @@ a{
     text-decoration: none;
     color: #555;
 }
+button{
+    border-width: 0px;
+}
 p{
     color: #555;
 }
@@ -304,7 +307,7 @@ select:focus{
     margin-top: 20px;
 }
 .single-product input{
-    width: 50px;
+    width: 70px;
     height: 40px;
     padding-left: 10px;
     font-size: 20px;
