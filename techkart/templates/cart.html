@@ -1,6 +1,7 @@
 {% extends 'blanklayout.html' %}
 {% load static %}
 {% load multiply %}
+{% load sum %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,7 +27,7 @@
                             <p>{{cart_item.product.title}}</p>
                             <small>Price: ${{cart_item.product.price}}</small>
                             <br>
-                            <a href="">Remove</a>
+                            <a href="{% url 'remove_item' cart_item.id  %}">Remove</a>
                         </div>
                     </div>
                 </td>
@@ -38,19 +39,11 @@
         <div class="total-price">
             <table>
                 <tr>
-                    <td>Subtotal</td>
-                    <td>$200.00</td>
-                </tr>
-                <tr>
-                    <td>Tax</td>
-                    <td>$35.00</td>
-                </tr>
-                <tr>
                     <td>Total</td>
-                    <td>$230.00</td>
+                    <td>${% sum cart %}</td>
                 </tr>
                 <tr>
-                    <td><button type="submit" class="btn">Confirm</button></td>
+                    <td><button type="submit" class="btn">Order</button></td>
                  </tr>
             </table>
         </div>
