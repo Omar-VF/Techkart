@@ -17,7 +17,7 @@ def account(request):
             email = request.POST.get("email")
             password = request.POST.get("password")
             address = request.POST.get("address")
-            phone = request.POST.get("phone")
+            phone = int(request.POST.get("phone"))
             # Create User Account
             user = User.objects.create_user(
                 username=username, password=password, email=email

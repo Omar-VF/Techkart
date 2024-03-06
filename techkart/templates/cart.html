@@ -9,7 +9,7 @@
 
 
 <body>
-
+    {% if cart %}
     <!-- Cart items details -->
     <div class="small-container cart-page">
         <table>
@@ -43,12 +43,27 @@
                     <td>${% sum cart %}</td>
                 </tr>
                 <tr>
-                    <td><button type="submit" class="btn">Order</button></td>
+                    <form action="{% url 'checkout' %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" name="total" value="{% sum cart %}">
+                        <td><button type="submit" class="btn">Order</button></td>
+                    </form>
                  </tr>
+                 <tr>
+                    <td>
+                        {% if messages %}
+                        <p>
+                            {% for message in messages %}
+                                <li>{{message}}</li>
+                            {% endfor %}        
+                        </p>
+                        {% endif %}
+                    </td>
+                </tr>
             </table>
         </div>
     </div>
-
+    {% endif %}
     <!-- javascript -->
 
     <script>

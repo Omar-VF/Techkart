@@ -14,7 +14,7 @@ class Customer(models.Model):
     user = models.OneToOneField(
         User, related_name="customer_profile", on_delete=models.CASCADE
     )
-    phone = models.IntegerField(default=0)
+    phone = models.BigIntegerField(default=0)
     delete_status = models.IntegerField(choices=DELETE_CHOICES, default=LIVE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
