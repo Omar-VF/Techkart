@@ -20,6 +20,7 @@ def cart(request):
     context = {"cart": cart_obj}
     if created:
         cart_obj.delete()
+        context = {'cart':False}
 
 
     return render(request, "cart.html", context)

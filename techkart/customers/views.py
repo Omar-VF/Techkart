@@ -32,7 +32,6 @@ def account(request):
         except Exception as e:
             errormsg = "Username Exists Or Invalid data!"
             messages.error(request, errormsg)
-            print(e)
 
     # Login
     elif request.POST and "login" in request.POST:
