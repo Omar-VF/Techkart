@@ -97,6 +97,12 @@ p{
     padding-left: 25px;
     padding-right: 25px;
 }
+.really-small-container{
+    max-width: 580px;
+    margin: auto;
+    padding-left: 25px;
+    padding-right: 25px;
+}
 .col-4{
     flex-basis: 25%;
     padding: 10px;

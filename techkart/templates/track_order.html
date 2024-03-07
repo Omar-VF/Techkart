@@ -1,0 +1,43 @@
+{% extends 'blanklayout.html' %}
+<!DOCTYPE html>
+<html lang="en">
+
+
+{% block content %}
+
+<body>
+
+    {% for order in orders %}
+    <div class="really-small-container cart-page">
+        <table>
+            <tbody>
+                <tr>
+                    <th>TRACK ORDER</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>Order ID :</td>
+                    <td>{{order.id}}</td>
+                </tr>
+                <tr>
+                    <td>Date :</td>
+                    <td>{{order.created_at}}</td>
+                </tr>
+                <tr>
+                    <td>Total Price :</td>
+                    <td>${{order.total_price}}</td>
+                </tr>
+                <tr>
+                    <td>Status :</td>
+                    <td>{{order.order_status}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    {% endfor %}
+    
+</body>
+
+{% endblock content %}
+
+</html>
