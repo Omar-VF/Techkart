@@ -1,3 +1,5 @@
+from collections.abc import Callable, Sequence
+from typing import Any
 from django.contrib import admin
 from django.http import HttpRequest
 from .models import Order, OrderedItem
@@ -5,19 +7,21 @@ from .models import Order, OrderedItem
 # Register your models here.
 
 
-class OrderItem(admin.TabularInline):
+class OrderItem(admin.StackedInline):
 
     model = OrderedItem
+    extra = 0
+
+
 
     def has_add_permission(self, request, obj):
-        return 
-    
+        return True
+
     def has_change_permission(self, request, obj):
         return False
-    
+
     def has_delete_permission(self, request, obj) -> bool:
         return False
-    
 
 
 class OrderAdmin(admin.ModelAdmin):
@@ -29,6 +33,10 @@ class OrderAdmin(admin.ModelAdmin):
         "created_at",
     ]
 
+    list_editable = [
+        "order_status",
+    ]
+
     list_filter = [
         "owner",
         "order_status",
@@ -38,46 +46,31 @@ class OrderAdmin(admin.ModelAdmin):
         "owner__username",
         "id",
     )
-    
 
     def has_add_permission(self, request):
         return False
-    
 
-    
     def has_change_permission(self, request, obj=None):
-        return True
+        if obj:
+            return False
+        else:
+            return True
 
 
 
     inlines = [OrderItem]
 
-    
-
-
 
 class OrderItemAdmin(admin.ModelAdmin):
-    list_display = [
-        "__str__",
-        "quantity",
-        "owner",
-        "orderid"
-    ]
+    list_display = ["__str__", "quantity", "owner", "orderid"]
 
     list_filter = [
         "owner",
         "owner__id",
     ]
 
-    search_fields = (
-        "owner__id",
-        "owner__owner__username",
-        "product__title"
-    )
-
-
+    search_fields = ("owner__id", "owner__owner__username", "product__title")
 
 
 admin.site.register(Order, OrderAdmin)
 admin.site.register(OrderedItem, OrderItemAdmin)
-

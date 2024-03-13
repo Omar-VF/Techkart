@@ -8,7 +8,9 @@ urlpatterns = [
     path("addcart/", views.add_to_cart, name="addcart"),
     path("removeitem/<pk>", views.remove_cart_item, name="remove_item"),
     path("checkout/", views.checkout, name="checkout"),
-    path('orders/', views.track_order,name='trackorder')
+    path("orders/", views.track_order, name="trackorder"),
 ]
 
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

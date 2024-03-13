@@ -23,10 +23,11 @@ from products import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('', views.home, name='home'),
+    path("", views.home, name="home"),
     path("", include("products.urls")),
-    path('orders/', include('orders.urls')),
-    path('customer/',include('customers.urls'))
+    path("orders/", include("orders.urls")),
+    path("customer/", include("customers.urls")),
 ]
 
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
