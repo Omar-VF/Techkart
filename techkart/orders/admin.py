@@ -12,8 +12,6 @@ class OrderItem(admin.StackedInline):
     model = OrderedItem
     extra = 0
 
-
-
     def has_add_permission(self, request, obj):
         return True
 
@@ -55,8 +53,6 @@ class OrderAdmin(admin.ModelAdmin):
             return False
         else:
             return True
-
-
 
     inlines = [OrderItem]
 
