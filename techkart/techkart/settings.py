@@ -86,7 +86,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "techkart.wsgi.application"
+WSGI_APPLICATION = "techkart.wsgi.app"
 
 
 # Database
