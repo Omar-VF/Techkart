@@ -12,10 +12,10 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
-import dj_database_url
 from os import getenv
 from dotenv import load_dotenv
 
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,12 +25,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-_alh6a*^8*)48-&-3ccibd(-qd!9za#s97(&)!fwhelxmezjq="
+SECRET_KEY = getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = [".vercel.app",'127.0.0.1']
+ALLOWED_HOSTS = [".vercel.app", "127.0.0.1"]
 
 
 # Application definition
@@ -48,6 +48,14 @@ INSTALLED_APPS = [
     "orders",
     "themes",
 ]
+
+
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SECURE_HSTS_SECONDS = 3600
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -84,22 +92,20 @@ WSGI_APPLICATION = "techkart.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-load_dotenv()
 
 DATABASES = {
-  'default': {
-    'ENGINE': 'django.db.backends.postgresql',
-    'NAME': getenv('PGDATABASE'),
-    'USER': getenv('PGUSER'),
-    'PASSWORD': getenv('PGPASSWORD'),
-    'HOST': getenv('PGHOST'),
-    'PORT': getenv('PGPORT', 5432),
-    'OPTIONS': {
-      'sslmode': 'allow',
-    },
-  }
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": getenv("PGDATABASE"),
+        "USER": getenv("PGUSER"),
+        "PASSWORD": getenv("PGPASSWORD"),
+        "HOST": getenv("PGHOST"),
+        "PORT": getenv("PGPORT", 5432),
+        "OPTIONS": {
+            "sslmode": "allow",
+        },
+    }
 }
-
 
 
 # Password validation
@@ -136,7 +142,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
 STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
@@ -145,7 +151,19 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Media files
 MEDIA_URL = "media/"
-MEDIA_ROOT = os.path.join(BASE_DIR,"media")
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+VALID_IMAGE_EXTENSIONS = [
+    ".jpg",
+    ".jpeg",
+    ".png",
+    ".gif",
+]
+
+
+def valid_url_extension(url, extension_list=VALID_IMAGE_EXTENSIONS):
+    return any([url.endswith(e) for e in extension_list])
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
