@@ -84,6 +84,8 @@ WSGI_APPLICATION = "techkart.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+load_dotenv()
+
 DATABASES = {
   'default': {
     'ENGINE': 'django.db.backends.postgresql',
@@ -93,7 +95,7 @@ DATABASES = {
     'HOST': getenv('PGHOST'),
     'PORT': getenv('PGPORT', 5432),
     'OPTIONS': {
-      'sslmode': 'require',
+      'sslmode': 'allow',
     },
   }
 }
