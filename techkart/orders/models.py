@@ -29,8 +29,7 @@ class Order(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
-        return self.owner.username
-    
+        return f"Order ID : {self.id}"
 
 
 # model for ordered item
@@ -45,7 +44,7 @@ class OrderedItem(models.Model):
 
     def __str__(self) -> str:
         return self.product.title
-    
+
     def orderid(self):
         orderid = self.owner.id
         return orderid

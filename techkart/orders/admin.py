@@ -10,10 +10,11 @@ from .models import Order, OrderedItem
 class OrderItem(admin.StackedInline):
 
     model = OrderedItem
-    extra = 0
+
+    extra = 5
 
     def has_add_permission(self, request, obj):
-        return True
+        return False
 
     def has_change_permission(self, request, obj):
         return False
@@ -66,6 +67,15 @@ class OrderItemAdmin(admin.ModelAdmin):
     ]
 
     search_fields = ("owner__id", "owner__owner__username", "product__title")
+
+    def has_add_permission(self, request) -> bool:
+        return False
+
+    def has_delete_permission(self, request, obj=None) -> bool:
+        return False
+
+    def has_change_permission(self, request, obj=None) -> bool:
+        return False
 
 
 admin.site.register(Order, OrderAdmin)

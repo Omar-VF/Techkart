@@ -16,7 +16,6 @@ def cart(request):
     cart_obj, created = Order.objects.get_or_create(
         owner=customer, order_status=Order.CART_STAGE
     )
-    print(created)
     context = {"cart": cart_obj}
     if created:
         cart_obj.delete()
@@ -72,8 +71,6 @@ def checkout(request):
             customer = user.customer_profile
 
             total = float(request.POST.get("total"))
-            print(total)
-
 
 
             if total != 0.0:
