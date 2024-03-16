@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import os
 import dj_database_url
+from os import getenv
+from dotenv import load_dotenv
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-_alh6a*^8*)48-&-3ccibd(-qd!9za#s97(&)!fwhelxmezjq="
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [".vercel.app",'127.0.0.1']
 
@@ -82,17 +85,19 @@ WSGI_APPLICATION = "techkart.wsgi.application"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "techkart",
-        "HOST": "localhost",
-        "PORT": "5432",
-        "USER": "postgres",
-        "PASSWORD": "omar",
-    }
+  'default': {
+    'ENGINE': 'django.db.backends.postgresql',
+    'NAME': getenv('PGDATABASE'),
+    'USER': getenv('PGUSER'),
+    'PASSWORD': getenv('PGPASSWORD'),
+    'HOST': getenv('PGHOST'),
+    'PORT': getenv('PGPORT', 5432),
+    'OPTIONS': {
+      'sslmode': 'require',
+    },
+  }
 }
 
-#DATABASES["default"] = dj_database_url.config()
 
 
 # Password validation
@@ -129,15 +134,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-#Storage
-STORAGES = {
-    # ...
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
-STATIC_URL = "/static/"
+STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
