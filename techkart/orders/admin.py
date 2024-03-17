@@ -55,10 +55,7 @@ class OrderAdmin(admin.ModelAdmin):
         return False
 
     def has_change_permission(self, request, obj=None):
-        if obj:
-            return False
-        else:
-            return True
+        return False
 
     inlines = [OrderItem]
 
