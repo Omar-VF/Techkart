@@ -32,6 +32,11 @@ class OrderAdmin(admin.ModelAdmin):
         "created_at",
     ]
 
+    readonly_fields = [
+        "total_price",
+        "owner",
+    ]
+
     list_editable = [
         "order_status",
     ]
